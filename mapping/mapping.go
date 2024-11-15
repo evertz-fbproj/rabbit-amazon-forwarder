@@ -6,6 +6,9 @@ import (
 	"os"
 
 	"github.com/AirHelp/rabbit-amazon-forwarder/connector"
+	"github.com/AirHelp/rabbit-amazon-forwarder/eventbridge"
+	"github.com/AirHelp/rabbit-amazon-forwarder/requestsqs"
+	"github.com/AirHelp/rabbit-amazon-forwarder/requestsqsfifo"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/AirHelp/rabbit-amazon-forwarder/config"
@@ -102,6 +105,12 @@ func (h helperImpl) createForwarder(entry config.AmazonEntry) forwarder.Client {
 		return sqs.CreateForwarder(entry)
 	case lambda.Type:
 		return lambda.CreateForwarder(entry)
+	case eventbridge.Type:
+		return eventbridge.CreateForwarder(entry)
+	case requestsqs.Type:
+		return requestsqs.CreateForwarder(entry)
+	case requestsqsfifo.Type:
+		return requestsqsfifo.CreateForwarder(entry)
 	}
 	return nil
 }
